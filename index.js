@@ -4,7 +4,6 @@ const cheerio = require('cheerio');
 const Excel = require('exceljs');
 const axios = require('axios');
 
-
 const url = "https://www.spareroom.co.uk/flatshare/?search_id=1234606887&";
 
 axios.get(url)
