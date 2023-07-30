@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scraping e Exportação para Excel</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Scraping e Exportação para Excel</h1>
+    <button onclick="scrapeAndExport()">Clique para Scrapear e Exportar</button>
+    <p class="status" id="status"></p>
+    <a id="downloadLink" style="display: none;"></a>
+  </div>
+
+  <script>
+    function scrapeAndExport() {
+      const statusElement = document.getElementById('status');
+      statusElement.textContent = 'Realizando scraping e exportação...';
+
+      // Fazer a requisição para o servidor Node.js para executar o scraping e obter o arquivo Excel gerado
+      fetch('/scrape', { method: 'POST' })
+        .then(response => response.blob())
+        .then(blob => {
+          // Criar um link de download para o arquivo Excel
+          const downloadLink = document.getElementById('downloadLink');
+          downloadLink.href = URL.createObjectURL(blob);
+          downloadLink.download = 'titulos.xlsx';
+
+          // Disparar o evento de clique no link para iniciar o download
+          downloadLink.click();
+
+          statusElement.textContent = 'Lista de títulos exportada com sucesso para o arquivo "titulos.xlsx"';
+        })
+        .catch(error => {
+          statusElement.textContent = 'Ocorreu um erro ao realizar o scraping e exportação.';
+        });
+    }
+  </script>
+</body>
+</html>
